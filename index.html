@@ -10,7 +10,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Холодний старт — свій перший курс на холодну рекламу за 2 тижні">
-  <meta property="og:description" content="Без блогу, без підписників, без прогрівів. Та сама механіка, якою ми ллємо на свій проєкт $3000+/міс зі стабільним ROAS 600–850%.">
+  <meta property="og:description" content="Без блогу, без підписників, без прогрівів. Запускаєш рекламу на тих, хто тебе ще не знає — і вони купують.">
   <!-- [ЗАПОЛНИТЬ: og:image — 1200x630 превʼю] -->
   <meta property="og:image" content="assets/images/og-cover.jpg">
   <!-- [ЗАПОЛНИТЬ: og:url — фінальний домен] -->
@@ -19,7 +19,6 @@
   <!-- [ЗАПОЛНИТЬ: favicon] -->
   <link rel="icon" href="assets/favicon.ico">
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -38,14 +37,12 @@
       --font-display: "Unbounded", system-ui, sans-serif;
       --font-body:    "Inter", system-ui, sans-serif;
 
-      --maxw: 1180px;
-      --pad:  clamp(20px, 5vw, 64px);
+      --maxw: 1320px;
+      --pad:  clamp(20px, 4.5vw, 56px);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { -webkit-text-size-adjust: 100%; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -59,248 +56,204 @@
 
     /* ---------- GLOBAL BACKGROUND ---------- */
     .bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
+      position: fixed; inset: 0; z-index: -1;
+      overflow: hidden; pointer-events: none;
       background: var(--bg);
     }
-    /* dashboard grid — "холод як ясність", не порожнеча */
     .bg::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background-image:
         linear-gradient(var(--line) 1px, transparent 1px),
         linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 100% 85% at 70% 22%, #000 32%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 100% 85% at 70% 22%, #000 32%, transparent 100%);
-      opacity: 0.5;
+      background-size: 68px 68px;
+      mask-image: radial-gradient(ellipse 100% 90% at 50% 18%, #000 30%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 100% 90% at 50% 18%, #000 30%, transparent 100%);
+      opacity: 0.45;
     }
-    /* drifting cold-red ambient lights */
-    .bg__glow {
-      position: absolute;
-      width: 48vw; height: 48vw;
-      border-radius: 50%;
-      filter: blur(90px);
-      will-change: transform;
-    }
-    .bg__glow--1 {
-      top: -14vw; right: -8vw;
-      background: radial-gradient(circle, rgba(255,42,43,0.9), transparent 62%);
-      opacity: 0.16;
-      animation: drift1 19s ease-in-out infinite;
-    }
-    .bg__glow--2 {
-      bottom: -18vw; left: -10vw;
-      background: radial-gradient(circle, rgba(185,30,31,0.9), transparent 62%);
-      opacity: 0.12;
-      animation: drift2 24s ease-in-out infinite;
-    }
-    @keyframes drift1 { 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-4vw,5vw); } }
-    @keyframes drift2 { 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(5vw,-4vw); } }
     #fx { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-    @media (prefers-reduced-motion: reduce) {
-      .bg__glow { animation: none; }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255,42,43,0.5); }
+      70%  { box-shadow: 0 0 0 8px rgba(255,42,43,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,42,43,0); }
     }
 
     /* ---------- HERO ---------- */
     .hero {
       position: relative;
       min-height: 100svh;
+      overflow: hidden;
       display: flex;
-      align-items: center;
-      padding: clamp(28px, 6vh, 56px) var(--pad);
+      flex-direction: column;
+      padding: clamp(18px,3vh,26px) var(--pad) 0;
+    }
+    .hero__wrap {
+      width: 100%; max-width: var(--maxw);
+      margin: 0 auto; height: 100%;
+      display: flex; flex-direction: column; flex: 1;
     }
 
-    .hero__inner {
-      width: 100%;
-      max-width: var(--maxw);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: clamp(32px, 5vw, 72px);
-      align-items: center;
+    /* red backlight behind photo (як у референсі) */
+    .backlight {
+      position: absolute; z-index: 0;
+      width: 70vw; max-width: 900px; aspect-ratio: 1;
+      left: 50%; top: 46%; transform: translate(-50%,-50%);
+      background: radial-gradient(circle, rgba(255,42,43,0.30), rgba(185,30,31,0.10) 40%, transparent 66%);
+      filter: blur(40px);
+      animation: breathe 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes breathe {
+      0%,100% { opacity: .8; transform: translate(-50%,-50%) scale(1); }
+      50%     { opacity: 1;  transform: translate(-50%,-50%) scale(1.06); }
     }
 
-    /* eyebrow */
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 13px;
-      letter-spacing: 0.04em;
+    /* top status bar */
+    .topbar {
+      position: relative; z-index: 3;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--muted);
-      border: 1px solid var(--line);
-      border-radius: 100px;
-      padding: 7px 14px 7px 12px;
-      margin-bottom: 28px;
+      padding-bottom: clamp(18px,4vh,40px);
     }
-    .eyebrow b { color: var(--text); font-weight: 600; }
-    .dot {
+    .topbar .brand { display: inline-flex; align-items: center; gap: 9px; color: var(--text); font-weight: 600; }
+    .topbar .brand .dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 0 rgba(255,42,43,0.55);
-      animation: pulse 2.4s ease-out infinite;
+      background: var(--accent); animation: pulse 2.4s ease-out infinite;
     }
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(255,42,43,0.5); }
-      70%  { box-shadow: 0 0 0 9px rgba(255,42,43,0); }
-      100% { box-shadow: 0 0 0 0 rgba(255,42,43,0); }
+
+    /* middle: headline | photo | lead+cta */
+    .middle {
+      position: relative; z-index: 1; flex: 1;
+      display: grid;
+      grid-template-columns: 1.05fr auto 1fr;
+      gap: clamp(20px,3.5vw,52px);
+      align-items: center;
+      padding-bottom: clamp(18px,4vh,40px);
     }
+    .col { position: relative; z-index: 1; }
 
     h1 {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: clamp(2.05rem, 5.4vw, 3.85rem);
-      line-height: 1.06;
+      font-size: clamp(1.75rem, 3.2vw, 2.65rem);
+      line-height: 1.12;
       letter-spacing: -0.02em;
-      margin-bottom: 22px;
     }
-    h1 .hl { color: var(--accent); white-space: nowrap; }
+    h1 .hl { color: var(--accent); }
 
-    .subhead {
-      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
-      color: var(--text);
-      font-weight: 500;
-      margin-bottom: 26px;
-      max-width: 30ch;
+    .right { justify-self: end; max-width: 300px; }
+    .lead {
+      font-size: 15.5px; line-height: 1.6; color: var(--muted);
+      margin-bottom: 24px;
     }
-    .subhead .soft { color: var(--muted); font-weight: 400; }
+    .lead .hl { color: var(--accent); font-weight: 500; }
 
-    .proof-line {
-      font-size: 15.5px;
-      color: var(--muted);
-      max-width: 46ch;
-      margin-bottom: 36px;
-      border-left: 2px solid var(--accent-dim);
-      padding-left: 16px;
+    /* photo (cut-out, stands on the meta line) */
+    .photo { align-self: end; z-index: 1; }
+    .photo__slot {
+      width: clamp(220px, 23vw, 320px);
+      height: min(62vh, 560px);
+      border: 1px solid var(--line);
+      border-bottom: none;
+      border-radius: 20px 20px 0 0;
+      background: linear-gradient(180deg, var(--surface), #0f1217);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
     }
-    .proof-line strong { color: var(--text); font-weight: 600; }
+    .photo__slot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .photo__hint { font-size: 12.5px; letter-spacing: 0.05em; color: var(--muted); text-align: center; padding: 0 16px; }
 
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 18px 24px;
-    }
+    /* CTA pill */
     .btn {
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 16px;
-      color: #fff;
-      background: var(--accent);
-      border: none;
-      border-radius: 10px;
-      padding: 18px 30px;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 8px 30px rgba(255,42,43,0.22);
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--font-body); font-weight: 600; font-size: 16px;
+      color: #fff; background: var(--accent);
+      border: none; border-radius: 100px;
+      padding: 17px 30px; text-decoration: none; cursor: pointer;
+      box-shadow: 0 10px 34px rgba(255,42,43,0.26);
       transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
     }
-    .btn:hover {
-      background: var(--accent-dim);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(255,42,43,0.3);
-    }
+    .btn:hover { background: var(--accent-dim); transform: translateY(-2px); box-shadow: 0 14px 40px rgba(255,42,43,0.34); }
     .btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-    .btn .arrow {
-      font-family: var(--font-body);
-      transition: transform .18s ease;
-      position: relative; z-index: 1;
-    }
+    .btn .arrow { position: relative; z-index: 1; transition: transform .18s ease; }
     .btn:hover .arrow { transform: translateX(4px); }
-    /* shine sweep on hover */
     .btn::before {
-      content: "";
-      position: absolute;
-      top: 0; left: -130%;
+      content: ""; position: absolute; top: 0; left: -130%;
       width: 55%; height: 100%;
       background: linear-gradient(110deg, transparent, rgba(255,255,255,0.4), transparent);
-      transform: skewX(-18deg);
-      pointer-events: none;
+      transform: skewX(-18deg); pointer-events: none;
     }
     .btn:hover::before { animation: shine .7s ease; }
     @keyframes shine { from { left: -130%; } to { left: 140%; } }
+
+    /* giant wordmark behind */
+    .bigmark {
+      position: absolute; z-index: 0; left: 50%; bottom: clamp(54px,9vh,96px);
+      transform: translateX(-50%);
+      white-space: nowrap; pointer-events: none; user-select: none;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(3rem, 13.5vw, 12rem);
+      line-height: 0.8; letter-spacing: -0.03em;
+      color: rgba(255,42,43,0.12);
+    }
+
+    /* meta strip */
+    .meta {
+      position: relative; z-index: 2;
+      display: flex; justify-content: space-between; gap: 18px;
+      border-top: 1px solid var(--line);
+      padding: 16px 0 clamp(16px,3vh,26px);
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .meta__item { display: inline-flex; align-items: baseline; gap: 9px; white-space: nowrap; }
+    .meta__k { color: var(--muted); }
+    .meta__sep { color: var(--accent); }
+    .meta__v { color: var(--text); font-weight: 600; }
+
+    /* reveal */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+      .reveal.d1 { animation-delay: .05s; }
+      .reveal.d2 { animation-delay: .14s; }
+      .reveal.d3 { animation-delay: .23s; }
+      .reveal.d4 { animation-delay: .32s; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+    }
     @media (prefers-reduced-motion: reduce) {
+      .backlight { animation: none; }
       .btn:hover { transform: none; }
       .btn:hover::before { animation: none; }
     }
 
-    .leads {
-      font-size: 13.5px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .leads b { color: var(--text); font-weight: 600; }
-
-    /* ---------- hero photo ---------- */
-    .photo { display: block; }
-    .photo__slot {
-      position: relative;
-      aspect-ratio: 4 / 5;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    /* тонка червона кутова рамка — акцент, не заливка */
-    .photo__slot::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1px solid var(--line);
-      border-top-color: var(--accent-dim);
-      border-radius: 12px;
-      pointer-events: none;
-    }
-    .photo__hint {
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-    .photo__cap {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.5;
-    }
-    .photo__cap b { color: var(--text); font-weight: 600; }
-
-    /* load-in */
-    @media (prefers-reduced-motion: no-preference) {
-      .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
-      .reveal.d1 { animation-delay: .05s; }
-      .reveal.d2 { animation-delay: .13s; }
-      .reveal.d3 { animation-delay: .21s; }
-      .reveal.d4 { animation-delay: .29s; }
-      .reveal.d5 { animation-delay: .37s; }
-      @keyframes rise { to { opacity: 1; transform: none; } }
-    }
-
     /* ---------- responsive ---------- */
-    @media (max-width: 880px) {
-      .hero__inner { grid-template-columns: 1fr; gap: 36px; }
-      .hero { min-height: auto; padding-top: 40px; padding-bottom: 48px; }
-      .hero::before { mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, #000 30%, transparent 100%);
-                      -webkit-mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, #000 30%, transparent 100%); }
-      .photo { order: 2; max-width: 420px; margin: 0 auto; width: 100%; }
-      .subhead, .proof-line { max-width: none; }
+    @media (max-width: 920px) {
+      .middle {
+        grid-template-columns: 1fr;
+        justify-items: start;
+        gap: 26px;
+        align-items: start;
+        padding-bottom: 30px;
+      }
+      h1 { font-size: clamp(1.9rem, 7vw, 2.6rem); }
+      .right { justify-self: start; max-width: 420px; }
+      .photo { order: 3; align-self: center; width: 100%; display: flex; justify-content: center; }
+      .photo__slot {
+        width: min(300px, 80%);
+        height: 46vh;
+        border-bottom: 1px solid var(--line);
+        border-radius: 20px;
+      }
+      .bigmark { bottom: clamp(70px,11vh,110px); font-size: clamp(2.4rem, 16vw, 6rem); }
     }
-    @media (max-width: 420px) {
+    @media (max-width: 560px) {
+      .topbar .status { display: none; }
+      .meta { flex-direction: column; gap: 10px; }
+      .meta__item { justify-content: flex-start; }
       .btn { width: 100%; justify-content: center; }
+      .bigmark { bottom: clamp(120px,20vh,180px); }
     }
   </style>
 </head>
@@ -308,54 +261,56 @@
 
   <!-- ============ ФОН (на всю сторінку) ============ -->
   <div class="bg" aria-hidden="true">
-    <span class="bg__glow bg__glow--1"></span>
-    <span class="bg__glow bg__glow--2"></span>
     <canvas id="fx"></canvas>
   </div>
 
   <!-- ============ БЛОК 1 · HERO ============ -->
   <header class="hero">
-    <div class="hero__inner">
+    <div class="backlight" aria-hidden="true"></div>
 
-      <div class="hero__copy">
-        <span class="eyebrow reveal d1">
-          <span class="dot"></span>Метод <b>«Холодний старт»</b>
-        </span>
+    <div class="hero__wrap">
 
-        <h1 class="reveal d1">
-          Запусти свій перший курс на холодну рекламу — <span class="hl">за 2 тижні</span>.
-        </h1>
+      <!-- статус-бар -->
+      <div class="topbar">
+        <span class="brand"><span class="dot"></span>Холодний&nbsp;старт</span>
+        <span class="status">Перший потік · до 10 місць</span>
+      </div>
 
-        <p class="subhead reveal d2">
-          Без блогу, без підписників, <span class="soft">без місяців прогрівів у сторіс.</span>
-        </p>
+      <!-- центральна зона -->
+      <div class="middle">
+        <!-- гігантський логотип позаду -->
+        <div class="bigmark" aria-hidden="true">ХОЛОДНИЙ СТАРТ</div>
 
-        <p class="proof-line reveal d3">
-          Та сама механіка, якою ми ллємо на свій проєкт
-          <strong>$3000+/міс</strong> зі стабільним <strong>ROAS 600–850%</strong>.
-        </p>
+        <div class="col left reveal d1">
+          <h1>
+            Запусти свій перший курс на холодну рекламу — <span class="hl">за 2 тижні</span>.
+          </h1>
+        </div>
 
-        <div class="cta-row reveal d4">
+        <!-- [ФОТО: Дмитро + Денис — на виліт, без фону] -->
+        <figure class="photo col reveal d3" aria-label="Фото: Дмитро Соколов і Денис Пивовар">
+          <div class="photo__slot">
+            <span class="photo__hint">[ ФОТО: Дмитро + Денис<br>на виліт, без фону ]</span>
+          </div>
+        </figure>
+
+        <div class="col right reveal d2">
+          <p class="lead">
+            Без блогу, без підписників, без місяців прогрівів. Запускаєш рекламу на тих, хто тебе ще не знає — <span class="hl">і вони купують</span>.
+          </p>
           <a class="btn" href="#tarify">
             Зібрати свій запуск
             <span class="arrow" aria-hidden="true">→</span>
           </a>
-          <p class="leads">
-            Ведуть два практики:<br>
-            <b>Дмитро Соколов</b> і <b>Денис Пивовар</b>
-          </p>
         </div>
       </div>
 
-      <!-- [ФОТО/ВІДЕО: hero — Дмитро і Денис] -->
-      <figure class="photo reveal d5" aria-label="Спільне фото: Дмитро Соколов і Денис Пивовар">
-        <div class="photo__slot">
-          <span class="photo__hint">[ ФОТО: Дмитро + Денис ]</span>
-        </div>
-        <figcaption class="photo__cap">
-          <b>Дмитро Соколов</b> · холодний трафік &nbsp;|&nbsp; <b>Денис Пивовар</b> · AI і продажі
-        </figcaption>
-      </figure>
+      <!-- мета-строка -->
+      <div class="meta reveal d4">
+        <span class="meta__item"><span class="meta__k">Формат</span><span class="meta__sep">/</span><span class="meta__v">6 ефірів онлайн</span></span>
+        <span class="meta__item"><span class="meta__k">Тривалість</span><span class="meta__sep">/</span><span class="meta__v">2 тижні</span></span>
+        <span class="meta__item"><span class="meta__k">Старт</span><span class="meta__sep">/</span><span class="meta__v">[ДАТА]</span></span>
+      </div>
 
     </div>
   </header>
@@ -375,16 +330,15 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       function make() {
-        var n = Math.round(Math.min(w, 1500) / 24);
+        var n = Math.round(Math.min(w, 1500) / 26);
         parts = [];
         for (var i = 0; i < n; i++) {
           parts.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
+            x: Math.random() * w, y: Math.random() * h,
             r: Math.random() * 1.5 + 0.5,
             vx: (Math.random() - 0.5) * 0.1,
             vy: -(Math.random() * 0.16 + 0.03),
-            a: Math.random() * 0.35 + 0.12,
+            a: Math.random() * 0.32 + 0.1,
             red: Math.random() < 0.07
           });
         }
@@ -395,9 +349,7 @@
           var p = parts[i];
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.red
-            ? 'rgba(255,42,43,' + p.a + ')'
-            : 'rgba(244,246,248,' + (p.a * 0.5) + ')';
+          ctx.fillStyle = p.red ? 'rgba(255,42,43,' + p.a + ')' : 'rgba(244,246,248,' + (p.a * 0.5) + ')';
           ctx.fill();
           if (move) {
             p.x += p.vx; p.y += p.vy;
@@ -407,16 +359,9 @@
         }
       }
       function loop() { paint(true); raf = requestAnimationFrame(loop); }
-      function init() {
-        size(); make();
-        if (raf) cancelAnimationFrame(raf);
-        if (reduce) paint(false); else loop();
-      }
+      function init() { size(); make(); if (raf) cancelAnimationFrame(raf); if (reduce) paint(false); else loop(); }
       var t;
-      window.addEventListener('resize', function () {
-        clearTimeout(t);
-        t = setTimeout(init, 150);
-      }, { passive: true });
+      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(init, 150); }, { passive: true });
       init();
     })();
   </script>
