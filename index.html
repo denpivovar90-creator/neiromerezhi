@@ -57,6 +57,56 @@
       overflow-x: hidden;
     }
 
+    /* ---------- GLOBAL BACKGROUND ---------- */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background: var(--bg);
+    }
+    /* dashboard grid — "холод як ясність", не порожнеча */
+    .bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 100% 85% at 70% 22%, #000 32%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 100% 85% at 70% 22%, #000 32%, transparent 100%);
+      opacity: 0.5;
+    }
+    /* drifting cold-red ambient lights */
+    .bg__glow {
+      position: absolute;
+      width: 48vw; height: 48vw;
+      border-radius: 50%;
+      filter: blur(90px);
+      will-change: transform;
+    }
+    .bg__glow--1 {
+      top: -14vw; right: -8vw;
+      background: radial-gradient(circle, rgba(255,42,43,0.9), transparent 62%);
+      opacity: 0.16;
+      animation: drift1 19s ease-in-out infinite;
+    }
+    .bg__glow--2 {
+      bottom: -18vw; left: -10vw;
+      background: radial-gradient(circle, rgba(185,30,31,0.9), transparent 62%);
+      opacity: 0.12;
+      animation: drift2 24s ease-in-out infinite;
+    }
+    @keyframes drift1 { 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-4vw,5vw); } }
+    @keyframes drift2 { 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(5vw,-4vw); } }
+    #fx { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bg__glow { animation: none; }
+    }
+
     /* ---------- HERO ---------- */
     .hero {
       position: relative;
@@ -64,30 +114,6 @@
       display: flex;
       align-items: center;
       padding: clamp(28px, 6vh, 56px) var(--pad);
-      isolation: isolate;
-    }
-
-    /* faint dashboard grid — "холод як ясність", не порожнеча */
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 90% 80% at 70% 30%, #000 40%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 70% 30%, #000 40%, transparent 100%);
-      opacity: 0.6;
-    }
-    /* very restrained ambient — не градієнтна кнопка, а холодне світло */
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -3;
-      background: radial-gradient(ellipse 60% 50% at 78% 18%, rgba(255,42,43,0.10), transparent 70%);
     }
 
     .hero__inner {
@@ -162,25 +188,52 @@
       gap: 18px 24px;
     }
     .btn {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-family: var(--font-body);
+      gap: 12px;
+      font-family: var(--font-display);
       font-weight: 600;
       font-size: 16px;
       color: #fff;
       background: var(--accent);
       border: none;
-      border-radius: 12px;
-      padding: 17px 28px;
+      border-radius: 10px;
+      padding: 18px 30px;
       text-decoration: none;
       cursor: pointer;
-      transition: background .18s ease, transform .18s ease;
+      box-shadow: 0 8px 30px rgba(255,42,43,0.22);
+      transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
     }
-    .btn:hover { background: var(--accent-dim); transform: translateY(-1px); }
+    .btn:hover {
+      background: var(--accent-dim);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(255,42,43,0.3);
+    }
     .btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-    .btn .arrow { transition: transform .18s ease; }
+    .btn .arrow {
+      font-family: var(--font-body);
+      transition: transform .18s ease;
+      position: relative; z-index: 1;
+    }
     .btn:hover .arrow { transform: translateX(4px); }
+    /* shine sweep on hover */
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -130%;
+      width: 55%; height: 100%;
+      background: linear-gradient(110deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-18deg);
+      pointer-events: none;
+    }
+    .btn:hover::before { animation: shine .7s ease; }
+    @keyframes shine { from { left: -130%; } to { left: 140%; } }
+    @media (prefers-reduced-motion: reduce) {
+      .btn:hover { transform: none; }
+      .btn:hover::before { animation: none; }
+    }
 
     .leads {
       font-size: 13.5px;
@@ -189,60 +242,42 @@
     }
     .leads b { color: var(--text); font-weight: 600; }
 
-    /* ---------- metric panel (signature) ---------- */
-    .panel {
+    /* ---------- hero photo ---------- */
+    .photo { display: block; }
+    .photo__slot {
+      position: relative;
+      aspect-ratio: 4 / 5;
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 26px;
-    }
-    .panel__head {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 12.5px;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* тонка червона кутова рамка — акцент, не заливка */
+    .photo__slot::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid var(--line);
+      border-top-color: var(--accent-dim);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .photo__hint {
+      font-size: 13px;
       letter-spacing: 0.04em;
       color: var(--muted);
-      padding-bottom: 18px;
-      margin-bottom: 22px;
-      border-bottom: 1px solid var(--line);
     }
-    .live {
-      display: inline-flex; align-items: center; gap: 7px;
-      color: var(--success);
-    }
-    .live .dot { background: var(--success); }
-    .live .dot { animation: pulse-g 2.4s ease-out infinite; }
-    @keyframes pulse-g {
-      0%{ box-shadow:0 0 0 0 rgba(52,211,153,.5);}
-      70%{ box-shadow:0 0 0 8px rgba(52,211,153,0);}
-      100%{ box-shadow:0 0 0 0 rgba(52,211,153,0);}
-    }
-
-    .metric { margin-bottom: 22px; }
-    .metric:last-child { margin-bottom: 0; }
-    .metric__label {
+    .photo__cap {
+      margin-top: 14px;
       font-size: 13px;
       color: var(--muted);
-      margin-bottom: 4px;
+      text-align: center;
+      line-height: 1.5;
     }
-    .metric__value {
-      font-family: var(--font-display);
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      font-size: clamp(2.4rem, 6vw, 3.1rem);
-    }
-    .metric__value.accent { color: var(--accent); }
-    .metric__value .unit { font-size: 0.45em; color: var(--muted); font-weight: 600; }
-
-    .panel__foot {
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      font-size: 12.5px;
-      color: var(--muted);
-    }
+    .photo__cap b { color: var(--text); font-weight: 600; }
 
     /* load-in */
     @media (prefers-reduced-motion: no-preference) {
@@ -261,7 +296,7 @@
       .hero { min-height: auto; padding-top: 40px; padding-bottom: 48px; }
       .hero::before { mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, #000 30%, transparent 100%);
                       -webkit-mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, #000 30%, transparent 100%); }
-      .panel { order: 2; }
+      .photo { order: 2; max-width: 420px; margin: 0 auto; width: 100%; }
       .subhead, .proof-line { max-width: none; }
     }
     @media (max-width: 420px) {
@@ -270,6 +305,13 @@
   </style>
 </head>
 <body>
+
+  <!-- ============ ФОН (на всю сторінку) ============ -->
+  <div class="bg" aria-hidden="true">
+    <span class="bg__glow bg__glow--1"></span>
+    <span class="bg__glow bg__glow--2"></span>
+    <canvas id="fx"></canvas>
+  </div>
 
   <!-- ============ БЛОК 1 · HERO ============ -->
   <header class="hero">
@@ -305,31 +347,79 @@
         </div>
       </div>
 
-      <!-- signature: тихий «дашборд кабінету» -->
-      <aside class="panel reveal d5" aria-label="Показники нашого рекламного кабінету">
-        <div class="panel__head">
-          <span>НАШ КАБІНЕТ · ХОЛОДНИЙ ТРАФІК</span>
-          <span class="live"><span class="dot"></span>live</span>
+      <!-- [ФОТО/ВІДЕО: hero — Дмитро і Денис] -->
+      <figure class="photo reveal d5" aria-label="Спільне фото: Дмитро Соколов і Денис Пивовар">
+        <div class="photo__slot">
+          <span class="photo__hint">[ ФОТО: Дмитро + Денис ]</span>
         </div>
-
-        <div class="metric">
-          <div class="metric__label">ROAS, стабільно кілька місяців</div>
-          <div class="metric__value accent">600–850<span class="unit">%</span></div>
-        </div>
-
-        <div class="metric">
-          <div class="metric__label">Власних коштів у рекламу</div>
-          <div class="metric__value">$3000<span class="unit">+/міс</span></div>
-        </div>
-
-        <p class="panel__foot">
-          Реальні цифри з власного кабінету — не чужі скріни.
-          Цю саму механіку ти забираєш собі.
-        </p>
-      </aside>
+        <figcaption class="photo__cap">
+          <b>Дмитро Соколов</b> · холодний трафік &nbsp;|&nbsp; <b>Денис Пивовар</b> · AI і продажі
+        </figcaption>
+      </figure>
 
     </div>
   </header>
+
+  <script>
+    (function () {
+      var c = document.getElementById('fx');
+      if (!c || !c.getContext) return;
+      var ctx = c.getContext('2d');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = 0, h = 0, parts = [], raf = null;
+
+      function size() {
+        w = c.clientWidth; h = c.clientHeight;
+        c.width = w * dpr; c.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function make() {
+        var n = Math.round(Math.min(w, 1500) / 24);
+        parts = [];
+        for (var i = 0; i < n; i++) {
+          parts.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.5 + 0.5,
+            vx: (Math.random() - 0.5) * 0.1,
+            vy: -(Math.random() * 0.16 + 0.03),
+            a: Math.random() * 0.35 + 0.12,
+            red: Math.random() < 0.07
+          });
+        }
+      }
+      function paint(move) {
+        ctx.clearRect(0, 0, w, h);
+        for (var i = 0; i < parts.length; i++) {
+          var p = parts[i];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.red
+            ? 'rgba(255,42,43,' + p.a + ')'
+            : 'rgba(244,246,248,' + (p.a * 0.5) + ')';
+          ctx.fill();
+          if (move) {
+            p.x += p.vx; p.y += p.vy;
+            if (p.y < -6) { p.y = h + 6; p.x = Math.random() * w; }
+            if (p.x < -6) p.x = w + 6; else if (p.x > w + 6) p.x = -6;
+          }
+        }
+      }
+      function loop() { paint(true); raf = requestAnimationFrame(loop); }
+      function init() {
+        size(); make();
+        if (raf) cancelAnimationFrame(raf);
+        if (reduce) paint(false); else loop();
+      }
+      var t;
+      window.addEventListener('resize', function () {
+        clearTimeout(t);
+        t = setTimeout(init, 150);
+      }, { passive: true });
+      init();
+    })();
+  </script>
 
 </body>
 </html>
