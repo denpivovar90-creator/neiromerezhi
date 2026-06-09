@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Холодний старт — свій перший курс на холодну рекламу за 2 тижні</title>
+  <meta name="description" content="Збери і запусти свій перший курс на холодну рекламу за 2 тижні. Без блогу, без підписників, без місяців прогрівів. Метод «Холодний старт».">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Холодний старт — свій перший курс на холодну рекламу за 2 тижні">
+  <meta property="og:description" content="Без блогу, без підписників, без прогрівів. Та сама механіка, якою ми ллємо на свій проєкт $3000+/міс зі стабільним ROAS 600–850%.">
+  <!-- [ЗАПОЛНИТЬ: og:image — 1200x630 превʼю] -->
+  <meta property="og:image" content="assets/images/og-cover.jpg">
+  <!-- [ЗАПОЛНИТЬ: og:url — фінальний домен] -->
+  <meta property="og:url" content="https://holodniystart.netlify.app/">
+
+  <!-- [ЗАПОЛНИТЬ: favicon] -->
+  <link rel="icon" href="assets/favicon.ico">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:        #0D0F12;
+      --surface:   #171A1F;
+      --accent:    #FF2A2B;
+      --accent-dim:#B91E1F;
+      --text:      #F4F6F8;
+      --muted:     #9CA3AF;
+      --success:   #34D399;
+      --line:      rgba(244,246,248,0.08);
+
+      --font-display: "Unbounded", system-ui, sans-serif;
+      --font-body:    "Inter", system-ui, sans-serif;
+
+      --maxw: 1180px;
+      --pad:  clamp(20px, 5vw, 64px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: clamp(28px, 6vh, 56px) var(--pad);
+      isolation: isolate;
+    }
+
+    /* faint dashboard grid — "холод як ясність", не порожнеча */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 90% 80% at 70% 30%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 70% 30%, #000 40%, transparent 100%);
+      opacity: 0.6;
+    }
+    /* very restrained ambient — не градієнтна кнопка, а холодне світло */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background: radial-gradient(ellipse 60% 50% at 78% 18%, rgba(255,42,43,0.10), transparent 70%);
+    }
+
+    .hero__inner {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: center;
+    }
+
+    /* eyebrow */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      padding: 7px 14px 7px 12px;
+      margin-bottom: 28px;
+    }
+    .eyebrow b { color: var(--text); font-weight: 600; }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(255,42,43,0.55);
+      animation: pulse 2.4s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255,42,43,0.5); }
+      70%  { box-shadow: 0 0 0 9px rgba(255,42,43,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,42,43,0); }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.05rem, 5.4vw, 3.85rem);
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+    }
+    h1 .hl { color: var(--accent); white-space: nowrap; }
+
+    .subhead {
+      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 26px;
+      max-width: 30ch;
+    }
+    .subhead .soft { color: var(--muted); font-weight: 400; }
+
+    .proof-line {
+      font-size: 15.5px;
+      color: var(--muted);
+      max-width: 46ch;
+      margin-bottom: 36px;
+      border-left: 2px solid var(--accent-dim);
+      padding-left: 16px;
+    }
+    .proof-line strong { color: var(--text); font-weight: 600; }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px 24px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 16px;
+      color: #fff;
+      background: var(--accent);
+      border: none;
+      border-radius: 12px;
+      padding: 17px 28px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .18s ease, transform .18s ease;
+    }
+    .btn:hover { background: var(--accent-dim); transform: translateY(-1px); }
+    .btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+    .btn .arrow { transition: transform .18s ease; }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    .leads {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .leads b { color: var(--text); font-weight: 600; }
+
+    /* ---------- metric panel (signature) ---------- */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px;
+    }
+    .panel__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .live {
+      display: inline-flex; align-items: center; gap: 7px;
+      color: var(--success);
+    }
+    .live .dot { background: var(--success); }
+    .live .dot { animation: pulse-g 2.4s ease-out infinite; }
+    @keyframes pulse-g {
+      0%{ box-shadow:0 0 0 0 rgba(52,211,153,.5);}
+      70%{ box-shadow:0 0 0 8px rgba(52,211,153,0);}
+      100%{ box-shadow:0 0 0 0 rgba(52,211,153,0);}
+    }
+
+    .metric { margin-bottom: 22px; }
+    .metric:last-child { margin-bottom: 0; }
+    .metric__label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .metric__value {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-size: clamp(2.4rem, 6vw, 3.1rem);
+    }
+    .metric__value.accent { color: var(--accent); }
+    .metric__value .unit { font-size: 0.45em; color: var(--muted); font-weight: 600; }
+
+    .panel__foot {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* load-in */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+      .reveal.d1 { animation-delay: .05s; }
+      .reveal.d2 { animation-delay: .13s; }
+      .reveal.d3 { animation-delay: .21s; }
+      .reveal.d4 { animation-delay: .29s; }
+      .reveal.d5 { animation-delay: .37s; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 880px) {
+      .hero__inner { grid-template-columns: 1fr; gap: 36px; }
+      .hero { min-height: auto; padding-top: 40px; padding-bottom: 48px; }
+      .hero::before { mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, #000 30%, transparent 100%);
+                      -webkit-mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, #000 30%, transparent 100%); }
+      .panel { order: 2; }
+      .subhead, .proof-line { max-width: none; }
+    }
+    @media (max-width: 420px) {
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ БЛОК 1 · HERO ============ -->
+  <header class="hero">
+    <div class="hero__inner">
+
+      <div class="hero__copy">
+        <span class="eyebrow reveal d1">
+          <span class="dot"></span>Метод <b>«Холодний старт»</b>
+        </span>
+
+        <h1 class="reveal d1">
+          Запусти свій перший курс на холодну рекламу — <span class="hl">за 2 тижні</span>.
+        </h1>
+
+        <p class="subhead reveal d2">
+          Без блогу, без підписників, <span class="soft">без місяців прогрівів у сторіс.</span>
+        </p>
+
+        <p class="proof-line reveal d3">
+          Та сама механіка, якою ми ллємо на свій проєкт
+          <strong>$3000+/міс</strong> зі стабільним <strong>ROAS 600–850%</strong>.
+        </p>
+
+        <div class="cta-row reveal d4">
+          <a class="btn" href="#tarify">
+            Зібрати свій запуск
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <p class="leads">
+            Ведуть два практики:<br>
+            <b>Дмитро Соколов</b> і <b>Денис Пивовар</b>
+          </p>
+        </div>
+      </div>
+
+      <!-- signature: тихий «дашборд кабінету» -->
+      <aside class="panel reveal d5" aria-label="Показники нашого рекламного кабінету">
+        <div class="panel__head">
+          <span>НАШ КАБІНЕТ · ХОЛОДНИЙ ТРАФІК</span>
+          <span class="live"><span class="dot"></span>live</span>
+        </div>
+
+        <div class="metric">
+          <div class="metric__label">ROAS, стабільно кілька місяців</div>
+          <div class="metric__value accent">600–850<span class="unit">%</span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric__label">Власних коштів у рекламу</div>
+          <div class="metric__value">$3000<span class="unit">+/міс</span></div>
+        </div>
+
+        <p class="panel__foot">
+          Реальні цифри з власного кабінету — не чужі скріни.
+          Цю саму механіку ти забираєш собі.
+        </p>
+      </aside>
+
+    </div>
+  </header>
+
+</body>
+</html>
