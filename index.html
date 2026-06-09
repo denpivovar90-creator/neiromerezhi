@@ -7,15 +7,13 @@
   <title>Холодний старт — свій перший курс на холодну рекламу за 2 тижні</title>
   <meta name="description" content="Збери і запусти свій перший курс на холодну рекламу за 2 тижні. Без блогу, без підписників, без місяців прогрівів. Метод «Холодний старт».">
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Холодний старт — свій перший курс на холодну рекламу за 2 тижні">
   <meta property="og:description" content="Без блогу, без підписників, без прогрівів. Запускаєш рекламу на тих, хто тебе ще не знає — і вони купують.">
-  <!-- [ЗАПОЛНИТЬ: og:image — 1200x630 превʼю] -->
+  <!-- [ЗАПОЛНИТЬ: og:image — 1200x630] -->
   <meta property="og:image" content="assets/images/og-cover.jpg">
   <!-- [ЗАПОЛНИТЬ: og:url — фінальний домен] -->
   <meta property="og:url" content="https://holodniystart.netlify.app/">
-
   <!-- [ЗАПОЛНИТЬ: favicon] -->
   <link rel="icon" href="assets/favicon.ico">
 
@@ -25,294 +23,200 @@
 
   <style>
     :root {
-      --bg:        #0D0F12;
-      --surface:   #171A1F;
-      --accent:    #FF2A2B;
-      --accent-dim:#B91E1F;
-      --text:      #F4F6F8;
-      --muted:     #9CA3AF;
-      --success:   #34D399;
-      --line:      rgba(244,246,248,0.08);
-
-      --font-display: "Unbounded", system-ui, sans-serif;
-      --font-body:    "Inter", system-ui, sans-serif;
-
-      --maxw: 1320px;
-      --pad:  clamp(20px, 4.5vw, 56px);
+      --bg:#0D0F12; --surface:#171A1F; --accent:#FF2A2B; --accent-dim:#B91E1F;
+      --text:#F4F6F8; --muted:#9CA3AF; --success:#34D399; --line:rgba(244,246,248,0.08);
+      --font-display:"Unbounded",system-ui,sans-serif; --font-body:"Inter",system-ui,sans-serif;
+      --pad:clamp(24px,4.5vw,64px);
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-text-size-adjust: 100%; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { -webkit-text-size-adjust:100%; }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 17px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      overflow-x: hidden;
+      background:var(--bg); color:var(--text); font-family:var(--font-body);
+      font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility; overflow-x:hidden;
     }
 
     /* ---------- GLOBAL BACKGROUND ---------- */
-    .bg {
-      position: fixed; inset: 0; z-index: -1;
-      overflow: hidden; pointer-events: none;
-      background: var(--bg);
-    }
+    .bg { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; background:var(--bg); }
     .bg::before {
-      content: ""; position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 68px 68px;
-      mask-image: radial-gradient(ellipse 100% 90% at 50% 18%, #000 30%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 100% 90% at 50% 18%, #000 30%, transparent 100%);
-      opacity: 0.45;
+      content:""; position:absolute; inset:0;
+      background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+      background-size:68px 68px;
+      mask-image:radial-gradient(ellipse 80% 90% at 30% 30%,#000 30%,transparent 100%);
+      -webkit-mask-image:radial-gradient(ellipse 80% 90% at 30% 30%,#000 30%,transparent 100%);
+      opacity:0.45;
     }
-    #fx { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #fx { position:absolute; inset:0; width:100%; height:100%; }
 
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(255,42,43,0.5); }
-      70%  { box-shadow: 0 0 0 8px rgba(255,42,43,0); }
-      100% { box-shadow: 0 0 0 0 rgba(255,42,43,0); }
-    }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,42,43,.5);} 70%{box-shadow:0 0 0 8px rgba(255,42,43,0);} 100%{box-shadow:0 0 0 0 rgba(255,42,43,0);} }
 
-    /* ---------- HERO ---------- */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      padding: clamp(18px,3vh,26px) var(--pad) 0;
-    }
-    .hero__wrap {
-      width: 100%; max-width: var(--maxw);
-      margin: 0 auto; height: 100%;
-      display: flex; flex-direction: column; flex: 1;
-    }
+    /* ---------- HERO (split 55/45) ---------- */
+    .hero { position:relative; min-height:100svh; overflow:hidden; display:flex; }
 
-    /* red backlight behind photo (як у референсі) */
-    .backlight {
-      position: absolute; z-index: 0;
-      width: 70vw; max-width: 900px; aspect-ratio: 1;
-      left: 50%; top: 46%; transform: translate(-50%,-50%);
-      background: radial-gradient(circle, rgba(255,42,43,0.30), rgba(185,30,31,0.10) 40%, transparent 66%);
-      filter: blur(40px);
-      animation: breathe 8s ease-in-out infinite;
-      pointer-events: none;
+    /* text pane */
+    .hero__text {
+      position:relative; z-index:2; width:56%; min-height:100svh;
+      display:flex; flex-direction:column;
+      padding:clamp(24px,5vh,52px) clamp(28px,4vw,64px);
     }
-    @keyframes breathe {
-      0%,100% { opacity: .8; transform: translate(-50%,-50%) scale(1); }
-      50%     { opacity: 1;  transform: translate(-50%,-50%) scale(1.06); }
+    .kicker {
+      display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
+      font-size:12px; letter-spacing:0.08em; color:var(--muted);
+      border:1px solid var(--line); border-radius:100px; padding:7px 14px 7px 12px;
     }
+    .kicker .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pulse 2.4s ease-out infinite; }
+    .kicker b { color:var(--text); font-weight:600; }
 
-    /* top status bar */
-    .topbar {
-      position: relative; z-index: 3;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px;
-      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--muted);
-      padding-bottom: clamp(18px,4vh,40px);
-    }
-    .topbar .brand { display: inline-flex; align-items: center; gap: 9px; color: var(--text); font-weight: 600; }
-    .topbar .brand .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--accent); animation: pulse 2.4s ease-out infinite;
-    }
-
-    /* middle: headline | photo | lead+cta */
-    .middle {
-      position: relative; z-index: 1; flex: 1;
-      display: grid;
-      grid-template-columns: 1.05fr auto 1fr;
-      gap: clamp(20px,3.5vw,52px);
-      align-items: center;
-      padding-bottom: clamp(18px,4vh,40px);
-    }
-    .col { position: relative; z-index: 1; }
+    .hero__main { flex:1; display:flex; flex-direction:column; justify-content:center; }
 
     h1 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: clamp(1.75rem, 3.2vw, 2.65rem);
-      line-height: 1.12;
-      letter-spacing: -0.02em;
+      font-family:var(--font-display); font-weight:700;
+      font-size:clamp(1.85rem,3.3vw,2.65rem); line-height:1.12; letter-spacing:-0.02em;
+      max-width:16ch; margin-bottom:24px;
     }
-    h1 .hl { color: var(--accent); }
+    h1 .hl { color:var(--accent); }
 
-    .right { justify-self: end; max-width: 300px; }
-    .lead {
-      font-size: 15.5px; line-height: 1.6; color: var(--muted);
-      margin-bottom: 24px;
+    /* subhead — підкладка + червона риска зліва (не жирність) */
+    .subhead {
+      position:relative; max-width:34ch;
+      background:rgba(244,246,248,0.04);
+      border-left:2px solid var(--accent);
+      border-radius:0 10px 10px 0;
+      padding:13px 18px; margin-bottom:30px;
+      font-size:clamp(1rem,1.4vw,1.12rem); color:var(--text);
     }
-    .lead .hl { color: var(--accent); font-weight: 500; }
-
-    /* photo (cut-out, stands on the meta line) */
-    .photo { align-self: end; z-index: 1; }
-    .photo__slot {
-      width: clamp(220px, 23vw, 320px);
-      height: min(62vh, 560px);
-      border: 1px solid var(--line);
-      border-bottom: none;
-      border-radius: 20px 20px 0 0;
-      background: linear-gradient(180deg, var(--surface), #0f1217);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .photo__slot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-    .photo__hint { font-size: 12.5px; letter-spacing: 0.05em; color: var(--muted); text-align: center; padding: 0 16px; }
+    .subhead .soft { color:var(--muted); }
 
     /* CTA pill */
     .btn {
-      position: relative; overflow: hidden;
-      display: inline-flex; align-items: center; gap: 12px;
-      font-family: var(--font-body); font-weight: 600; font-size: 16px;
-      color: #fff; background: var(--accent);
-      border: none; border-radius: 100px;
-      padding: 17px 30px; text-decoration: none; cursor: pointer;
-      box-shadow: 0 10px 34px rgba(255,42,43,0.26);
-      transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+      position:relative; overflow:hidden; align-self:flex-start;
+      display:inline-flex; align-items:center; gap:12px;
+      font-family:var(--font-body); font-weight:600; font-size:16px;
+      color:#fff; background:var(--accent); border:none; border-radius:100px;
+      padding:17px 30px; text-decoration:none; cursor:pointer;
+      box-shadow:0 10px 34px rgba(255,42,43,0.26);
+      transition:background .18s ease,transform .18s ease,box-shadow .18s ease;
     }
-    .btn:hover { background: var(--accent-dim); transform: translateY(-2px); box-shadow: 0 14px 40px rgba(255,42,43,0.34); }
-    .btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-    .btn .arrow { position: relative; z-index: 1; transition: transform .18s ease; }
-    .btn:hover .arrow { transform: translateX(4px); }
-    .btn::before {
-      content: ""; position: absolute; top: 0; left: -130%;
-      width: 55%; height: 100%;
-      background: linear-gradient(110deg, transparent, rgba(255,255,255,0.4), transparent);
-      transform: skewX(-18deg); pointer-events: none;
-    }
-    .btn:hover::before { animation: shine .7s ease; }
-    @keyframes shine { from { left: -130%; } to { left: 140%; } }
+    .btn:hover { background:var(--accent-dim); transform:translateY(-2px); box-shadow:0 14px 40px rgba(255,42,43,0.34); }
+    .btn:focus-visible { outline:2px solid var(--text); outline-offset:3px; }
+    .btn .arrow { position:relative; z-index:1; transition:transform .18s ease; }
+    .btn:hover .arrow { transform:translateX(4px); }
+    .btn::before { content:""; position:absolute; top:0; left:-130%; width:55%; height:100%;
+      background:linear-gradient(110deg,transparent,rgba(255,255,255,.4),transparent); transform:skewX(-18deg); pointer-events:none; }
+    .btn:hover::before { animation:shine .7s ease; }
+    @keyframes shine { from{left:-130%;} to{left:140%;} }
 
-    /* giant wordmark behind */
-    .bigmark {
-      position: absolute; z-index: 0; left: 50%; bottom: clamp(54px,9vh,96px);
-      transform: translateX(-50%);
-      white-space: nowrap; pointer-events: none; user-select: none;
-      font-family: var(--font-display); font-weight: 800;
-      font-size: clamp(3rem, 13.5vw, 12rem);
-      line-height: 0.8; letter-spacing: -0.03em;
-      color: rgba(255,42,43,0.12);
-    }
-
-    /* meta strip */
+    /* meta line */
     .meta {
-      position: relative; z-index: 2;
-      display: flex; justify-content: space-between; gap: 18px;
-      border-top: 1px solid var(--line);
-      padding: 16px 0 clamp(16px,3vh,26px);
-      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px;
+      padding-top:18px; border-top:1px solid var(--line);
+      font-size:12px; letter-spacing:0.09em; text-transform:uppercase;
     }
-    .meta__item { display: inline-flex; align-items: baseline; gap: 9px; white-space: nowrap; }
-    .meta__k { color: var(--muted); }
-    .meta__sep { color: var(--accent); }
-    .meta__v { color: var(--text); font-weight: 600; }
+    .meta__item { display:inline-flex; align-items:baseline; gap:8px; white-space:nowrap; }
+    .meta__k { color:var(--muted); } .meta__sep { color:var(--accent); } .meta__v { color:var(--text); font-weight:600; }
+    .meta__dot { color:var(--line); }
+
+    /* photo pane — bleed to edge */
+    .hero__photo { position:absolute; z-index:1; top:0; right:0; bottom:0; width:44%; }
+    .hero__photo .img {
+      position:absolute; inset:0; overflow:hidden;
+      background:linear-gradient(180deg,var(--surface),#0c0e12);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .hero__photo .img img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+    .hero__photo .hint { font-size:12.5px; letter-spacing:0.05em; color:var(--muted); text-align:center; padding:0 20px; }
+    /* red backlight grading */
+    .hero__photo::before {
+      content:""; position:absolute; z-index:1; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 70% 60% at 60% 40%,rgba(255,42,43,0.22),transparent 70%);
+      animation:breathe 8s ease-in-out infinite;
+    }
+    @keyframes breathe { 0%,100%{opacity:.85;} 50%{opacity:1;} }
+    /* dark vignette toward the seam so the line reads crisp */
+    .hero__photo::after {
+      content:""; position:absolute; z-index:1; left:0; top:0; bottom:0; width:120px; pointer-events:none;
+      background:linear-gradient(90deg,rgba(13,15,18,0.85),transparent);
+    }
+
+    /* seam + scanning dot */
+    .seam { position:absolute; z-index:3; left:0; top:0; bottom:0; width:1px;
+      background:linear-gradient(180deg,transparent,rgba(255,42,43,0.4),transparent); }
+    .beam { position:absolute; left:-4px; width:9px; height:9px; border-radius:50%;
+      background:var(--accent); box-shadow:inset 0 0 0 2px rgba(13,15,18,0.5);
+      animation:scan 5s ease-in-out infinite alternate; }
+    @keyframes scan { from{top:2%;} to{top:calc(98% - 9px);} }
 
     /* reveal */
-    @media (prefers-reduced-motion: no-preference) {
-      .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
-      .reveal.d1 { animation-delay: .05s; }
-      .reveal.d2 { animation-delay: .14s; }
-      .reveal.d3 { animation-delay: .23s; }
-      .reveal.d4 { animation-delay: .32s; }
-      @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion:no-preference) {
+      .reveal { opacity:0; transform:translateY(14px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+      .reveal.d1{animation-delay:.05s;} .reveal.d2{animation-delay:.14s;} .reveal.d3{animation-delay:.23s;} .reveal.d4{animation-delay:.32s;}
+      @keyframes rise { to { opacity:1; transform:none; } }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .backlight { animation: none; }
-      .btn:hover { transform: none; }
-      .btn:hover::before { animation: none; }
+    @media (prefers-reduced-motion:reduce) {
+      .beam,.hero__photo::before { animation:none; }
+      .btn:hover { transform:none; } .btn:hover::before { animation:none; }
     }
 
     /* ---------- responsive ---------- */
-    @media (max-width: 920px) {
-      .middle {
-        grid-template-columns: 1fr;
-        justify-items: start;
-        gap: 26px;
-        align-items: start;
-        padding-bottom: 30px;
-      }
-      h1 { font-size: clamp(1.9rem, 7vw, 2.6rem); }
-      .right { justify-self: start; max-width: 420px; }
-      .photo { order: 3; align-self: center; width: 100%; display: flex; justify-content: center; }
-      .photo__slot {
-        width: min(300px, 80%);
-        height: 46vh;
-        border-bottom: 1px solid var(--line);
-        border-radius: 20px;
-      }
-      .bigmark { bottom: clamp(70px,11vh,110px); font-size: clamp(2.4rem, 16vw, 6rem); }
+    @media (max-width:900px) {
+      .hero { flex-direction:column; }
+      .hero__text { width:100%; min-height:auto; padding-top:30px; padding-bottom:34px; order:1; }
+      .hero__main { padding:24px 0; }
+      h1 { font-size:clamp(2rem,7.5vw,2.7rem); max-width:none; }
+      .subhead { max-width:none; }
+      .hero__photo { position:relative; width:100%; height:46vh; order:2; }
+      .seam, .beam { display:none; }
+      .hero__photo::after { display:none; }
     }
-    @media (max-width: 560px) {
-      .topbar .status { display: none; }
-      .meta { flex-direction: column; gap: 10px; }
-      .meta__item { justify-content: flex-start; }
-      .btn { width: 100%; justify-content: center; }
-      .bigmark { bottom: clamp(120px,20vh,180px); }
+    @media (max-width:480px) {
+      .btn { width:100%; justify-content:center; }
+      .meta { gap:8px 12px; }
+      .meta__dot { display:none; }
+      .meta__item { width:100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ============ ФОН (на всю сторінку) ============ -->
-  <div class="bg" aria-hidden="true">
-    <canvas id="fx"></canvas>
-  </div>
+  <div class="bg" aria-hidden="true"><canvas id="fx"></canvas></div>
 
-  <!-- ============ БЛОК 1 · HERO ============ -->
+  <!-- ============ БЛОК 1 · HERO (split) ============ -->
   <header class="hero">
-    <div class="backlight" aria-hidden="true"></div>
 
-    <div class="hero__wrap">
+    <div class="hero__text">
+      <span class="kicker reveal d1"><span class="dot"></span>Метод&nbsp;<b>«Холодний старт»</b></span>
 
-      <!-- статус-бар -->
-      <div class="topbar">
-        <span class="brand"><span class="dot"></span>Холодний&nbsp;старт</span>
-        <span class="status">Перший потік · до 10 місць</span>
+      <div class="hero__main">
+        <h1 class="reveal d1">
+          Запусти свій перший курс на холодну рекламу — <span class="hl">за 2 тижні</span>.
+        </h1>
+
+        <p class="subhead reveal d2">
+          Без блогу, без підписників, <span class="soft">без місяців прогрівів у сторіс.</span>
+        </p>
+
+        <a class="btn reveal d3" href="#tarify">
+          Зібрати свій запуск <span class="arrow" aria-hidden="true">→</span>
+        </a>
       </div>
 
-      <!-- центральна зона -->
-      <div class="middle">
-        <!-- гігантський логотип позаду -->
-        <div class="bigmark" aria-hidden="true">ХОЛОДНИЙ СТАРТ</div>
-
-        <div class="col left reveal d1">
-          <h1>
-            Запусти свій перший курс на холодну рекламу — <span class="hl">за 2 тижні</span>.
-          </h1>
-        </div>
-
-        <!-- [ФОТО: Дмитро + Денис — на виліт, без фону] -->
-        <figure class="photo col reveal d3" aria-label="Фото: Дмитро Соколов і Денис Пивовар">
-          <div class="photo__slot">
-            <span class="photo__hint">[ ФОТО: Дмитро + Денис<br>на виліт, без фону ]</span>
-          </div>
-        </figure>
-
-        <div class="col right reveal d2">
-          <p class="lead">
-            Без блогу, без підписників, без місяців прогрівів. Запускаєш рекламу на тих, хто тебе ще не знає — <span class="hl">і вони купують</span>.
-          </p>
-          <a class="btn" href="#tarify">
-            Зібрати свій запуск
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- мета-строка -->
       <div class="meta reveal d4">
-        <span class="meta__item"><span class="meta__k">Формат</span><span class="meta__sep">/</span><span class="meta__v">6 ефірів онлайн</span></span>
-        <span class="meta__item"><span class="meta__k">Тривалість</span><span class="meta__sep">/</span><span class="meta__v">2 тижні</span></span>
+        <span class="meta__item"><span class="meta__k">Формат</span><span class="meta__sep">/</span><span class="meta__v">6 ефірів</span></span>
+        <span class="meta__dot">·</span>
+        <span class="meta__item"><span class="meta__v">2 тижні</span></span>
+        <span class="meta__dot">·</span>
         <span class="meta__item"><span class="meta__k">Старт</span><span class="meta__sep">/</span><span class="meta__v">[ДАТА]</span></span>
       </div>
-
     </div>
+
+    <!-- [ФОТО: Дмитро + Денис — горизонтальне, bleed у край] -->
+    <figure class="hero__photo reveal d3" aria-label="Фото: Дмитро Соколов і Денис Пивовар">
+      <div class="img">
+        <span class="hint">[ ФОТО: Дмитро + Денис ]</span>
+      </div>
+      <div class="seam" aria-hidden="true"><span class="beam"></span></div>
+    </figure>
+
   </header>
 
   <script>
@@ -323,46 +227,12 @@
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       var w = 0, h = 0, parts = [], raf = null;
-
-      function size() {
-        w = c.clientWidth; h = c.clientHeight;
-        c.width = w * dpr; c.height = h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      function make() {
-        var n = Math.round(Math.min(w, 1500) / 26);
-        parts = [];
-        for (var i = 0; i < n; i++) {
-          parts.push({
-            x: Math.random() * w, y: Math.random() * h,
-            r: Math.random() * 1.5 + 0.5,
-            vx: (Math.random() - 0.5) * 0.1,
-            vy: -(Math.random() * 0.16 + 0.03),
-            a: Math.random() * 0.32 + 0.1,
-            red: Math.random() < 0.07
-          });
-        }
-      }
-      function paint(move) {
-        ctx.clearRect(0, 0, w, h);
-        for (var i = 0; i < parts.length; i++) {
-          var p = parts[i];
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.red ? 'rgba(255,42,43,' + p.a + ')' : 'rgba(244,246,248,' + (p.a * 0.5) + ')';
-          ctx.fill();
-          if (move) {
-            p.x += p.vx; p.y += p.vy;
-            if (p.y < -6) { p.y = h + 6; p.x = Math.random() * w; }
-            if (p.x < -6) p.x = w + 6; else if (p.x > w + 6) p.x = -6;
-          }
-        }
-      }
-      function loop() { paint(true); raf = requestAnimationFrame(loop); }
-      function init() { size(); make(); if (raf) cancelAnimationFrame(raf); if (reduce) paint(false); else loop(); }
-      var t;
-      window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(init, 150); }, { passive: true });
-      init();
+      function size(){ w=c.clientWidth; h=c.clientHeight; c.width=w*dpr; c.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+      function make(){ var n=Math.round(Math.min(w,1500)/26); parts=[]; for(var i=0;i<n;i++){ parts.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.5,vx:(Math.random()-0.5)*0.1,vy:-(Math.random()*0.16+0.03),a:Math.random()*0.32+0.1,red:Math.random()<0.07}); } }
+      function paint(move){ ctx.clearRect(0,0,w,h); for(var i=0;i<parts.length;i++){ var p=parts[i]; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.red?'rgba(255,42,43,'+p.a+')':'rgba(244,246,248,'+(p.a*0.5)+')'; ctx.fill(); if(move){ p.x+=p.vx; p.y+=p.vy; if(p.y<-6){p.y=h+6;p.x=Math.random()*w;} if(p.x<-6)p.x=w+6; else if(p.x>w+6)p.x=-6; } } }
+      function loop(){ paint(true); raf=requestAnimationFrame(loop); }
+      function init(){ size(); make(); if(raf)cancelAnimationFrame(raf); if(reduce)paint(false); else loop(); }
+      var t; window.addEventListener('resize',function(){ clearTimeout(t); t=setTimeout(init,150); },{passive:true}); init();
     })();
   </script>
 
