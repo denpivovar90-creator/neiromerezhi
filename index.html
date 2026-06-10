@@ -245,6 +245,79 @@
       .pain__icon [data-draw] { stroke-dashoffset:0; }
     }
     @media (max-width:760px) { .pain__grid { --stack-top:78px; --peek:78px; } }
+
+    /* ---------- block 3 — gain / точка Б ---------- */
+    .gain__intro { margin:18px 0 40px; max-width:48ch; }
+    .gain__neg { color:var(--muted); font-size:1.02rem; line-height:1.55; }
+    .gain__neg s { text-decoration-color:rgba(156,163,175,0.5); text-decoration-thickness:1px; }
+    .gain__aff {
+      display:block; margin-top:12px;
+      font-family:var(--font-display); font-weight:600;
+      font-size:clamp(1.15rem,2.1vw,1.5rem); line-height:1.3;
+      letter-spacing:-0.01em; color:var(--text);
+    }
+    .gain__aff .hl { color:var(--accent); }
+
+    .gain__list { display:flex; flex-direction:column; gap:14px; }
+    .gain__row {
+      position:relative; display:flex; gap:18px; align-items:flex-start;
+      background:var(--surface); border:1px solid var(--line); border-radius:16px;
+      padding:20px 24px; overflow:hidden;
+      transition:border-color .3s ease, transform .3s ease;
+    }
+    .gain__row.r { transition-delay:calc(var(--i,0) * 60ms); }
+    .gain__row:hover { border-color:rgba(52,211,153,0.4); transform:translateY(-2px); }
+
+    .gain__check {
+      position:relative; z-index:1; flex:none; width:30px; height:30px; border-radius:50%;
+      display:grid; place-items:center; margin-top:2px;
+      background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.5); color:var(--success);
+    }
+    .gain__check svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+    .gain__check svg path { stroke-dasharray:26; stroke-dashoffset:26; }
+    .gain__row.in .gain__check svg path { transition:stroke-dashoffset .6s ease .15s; stroke-dashoffset:0; }
+
+    .gain__body { position:relative; z-index:1; }
+    .gain__t { font-family:var(--font-display); font-weight:600; font-size:1.05rem; line-height:1.25; color:var(--text); }
+    .gain__d { color:var(--muted); font-size:0.96rem; line-height:1.5; margin-top:6px; max-width:52ch; }
+
+    .gain__ic {
+      position:absolute; z-index:0; right:-10px; bottom:-16px; width:104px; height:104px;
+      color:var(--text); opacity:0.06; pointer-events:none;
+      transition:opacity .4s ease, color .4s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    }
+    .gain__ic svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+    .gain__row:hover .gain__ic { opacity:0.16; color:var(--success); transform:translateY(-6px) scale(1.04); }
+
+    /* skill row — це навичка, а не артефакт */
+    .gain__row--skill { border-style:dashed; }
+    .gain__tag {
+      display:inline-block; margin-top:11px; font-size:11px; letter-spacing:0.07em; text-transform:uppercase;
+      color:var(--success); border:1px solid rgba(52,211,153,0.4); border-radius:100px; padding:4px 11px;
+    }
+
+    /* capstone — сума артефактів */
+    .gain__sum {
+      margin-top:22px; display:flex; align-items:center; gap:16px;
+      background:linear-gradient(90deg,rgba(255,42,43,0.08),transparent);
+      border:1px solid rgba(255,42,43,0.28); border-left:3px solid var(--accent);
+      border-radius:0 16px 16px 0; padding:20px 26px;
+    }
+    .gain__sum .eq { font-family:var(--font-display); font-weight:700; font-size:1.7rem; line-height:1; color:var(--accent); flex:none; }
+    .gain__sum .txt { font-family:var(--font-display); font-weight:600; font-size:clamp(1.05rem,1.9vw,1.3rem); line-height:1.25; letter-spacing:-0.01em; color:var(--text); }
+
+    /* closing payoff */
+    .gain__close { margin-top:34px; font-size:clamp(1.02rem,1.5vw,1.18rem); line-height:1.6; color:var(--muted); max-width:60ch; }
+    .gain__close strong { color:var(--text); font-weight:600; }
+    .gain__close .hl { color:var(--accent); }
+
+    .cta-wrap { margin-top:34px; }
+
+    @media (max-width:520px) {
+      .gain__row { padding:18px 18px; gap:14px; }
+      .gain__sum { padding:18px 18px; gap:12px; }
+      .cta-wrap .btn { width:100%; justify-content:center; }
+    }
   </style>
 </head>
 <body>
@@ -325,6 +398,81 @@
 
       <div class="reframe r">
         Це не тому, що ти мало стараєшся. Це тому, що в моделі «час за гроші» <span class="hl">стелю видно з самого початку</span>. І жоден прогрів цього не змінить — він просто додає тобі ще одну роботу зверху.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ БЛОК 3 · ОБРАЗ РЕЗУЛЬТАТУ (точка Б) ============ -->
+  <section class="section gain" id="rezultat">
+    <div class="container">
+      <h2 class="r">Що в тебе буде через <span class="hl">2 тижні</span></h2>
+
+      <div class="gain__intro r">
+        <span class="gain__neg">Не конспект. Не <s>папка з відео</s>, яку ти ніколи не відкриєш.</span>
+        <span class="gain__aff">На руках — <span class="hl">зібраний запуск</span>, готовий до реклами.</span>
+      </div>
+
+      <div class="gain__list">
+
+        <div class="gain__row r" style="--i:0">
+          <span class="gain__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17 L19 7"/></svg></span>
+          <div class="gain__body">
+            <div class="gain__t">Свій інфопродукт</div>
+            <p class="gain__d">Концепція, тема, структура. Те, що можна продавати.</p>
+          </div>
+          <span class="gain__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 L21 7.5 L12 12 L3 7.5 Z"/><path d="M3 12 L12 16.5 L21 12"/><path d="M3 16.5 L12 21 L21 16.5"/></svg></span>
+        </div>
+
+        <div class="gain__row r" style="--i:1">
+          <span class="gain__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17 L19 7"/></svg></span>
+          <div class="gain__body">
+            <div class="gain__t">Лендинг і оффер</div>
+            <p class="gain__d">Сторінка, яка продає замість тебе.</p>
+          </div>
+          <span class="gain__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="8.5" x2="21" y2="8.5"/><line x1="6.5" y1="12.5" x2="13.5" y2="12.5"/><line x1="6.5" y1="15.5" x2="11" y2="15.5"/></svg></span>
+        </div>
+
+        <div class="gain__row r" style="--i:2">
+          <span class="gain__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17 L19 7"/></svg></span>
+          <div class="gain__body">
+            <div class="gain__t">Холодна воронка</div>
+            <p class="gain__d">Шлях від реклами до оплати, зібраний під твою нішу.</p>
+          </div>
+          <span class="gain__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4 H21 L14 12 V20 L10 18 V12 Z"/></svg></span>
+        </div>
+
+        <div class="gain__row r" style="--i:3">
+          <span class="gain__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17 L19 7"/></svg></span>
+          <div class="gain__body">
+            <div class="gain__t">Пакет креативів</div>
+            <p class="gain__d">Оголошення, готові до запуску.</p>
+          </div>
+          <span class="gain__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9 V15 H8 L16 19 V5 L8 9 Z"/><path d="M19 9.5 a3.5 3.5 0 0 1 0 5"/></svg></span>
+        </div>
+
+        <div class="gain__row gain__row--skill r" style="--i:4">
+          <span class="gain__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 L10 17 L19 7"/></svg></span>
+          <div class="gain__body">
+            <div class="gain__t">Навичка лити холодний трафік і читати воронку</div>
+            <p class="gain__d">Щоб не залежати від підрядника — і запускати знову й знову вже самостійно.</p>
+            <span class="gain__tag">Залишається з тобою</span>
+          </div>
+          <span class="gain__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3"/></svg></span>
+        </div>
+
+      </div>
+
+      <div class="gain__sum r">
+        <span class="eq" aria-hidden="true">=</span>
+        <span class="txt">Зібраний запуск, готовий до реклами.</span>
+      </div>
+
+      <p class="gain__close r">
+        І головне — старт перестане бути страшним. Ти більше не «виконавець для чужих проєктів». <strong>Ти автор свого продукту</strong>, який продається <span class="hl">без прив'язки до годин</span>.
+      </p>
+
+      <div class="cta-wrap r">
+        <a class="btn" href="#tarify">Зібрати свій запуск <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
